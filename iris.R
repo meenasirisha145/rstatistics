@@ -1,0 +1,22 @@
+data("iris")
+iris
+library(caret)
+library(tidyr)
+dataset=iris
+View(dataset)
+colnames(dataset)
+library(caTools)
+set.seed(1234)
+split=sample.split(dataset$Species,SplitRatio =0.8)
+trainingdata=subset(dataset,split=TRUE)
+testdata=subset(dataset,split=FALSE)
+dim(trainingdata)
+str(trainingdata)
+summary(trainingdata)
+levels(trainingdata$Species)
+#BOXPLOT 
+par(mfrow=c(1,4))
+for(i in 1:4){
+  boxplot(trainingdata[,i],main=names(trainingdata)[i])
+}
+}
