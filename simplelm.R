@@ -22,6 +22,9 @@ cor.test(x,y)
 
 plot(x,y, main="plot between x and y")
 abline(lm(y~x),col="red",lty=4,pch=20)
+text(x,y,labels=paste(x,y,sep=","),cex=0.7,col="red")
+text(x,y,labels=paste0('(',x,',',y,')'))
+text(4,10,labels="meena",col="blue")
 fit=lm(y~x)
 fit
 summary(fit)
@@ -60,3 +63,10 @@ n=length(x)
 n
 stderror=sqrt(sum(df$sse)/(n-2))
 stderror
+
+
+p=1#no.of independent variables
+(MSR=round(sum(df$ssr),2/p))
+(MSE=round(sum(df$sse),2/(n-p-1)))
+fstat=MSR/MSE
+fstat
