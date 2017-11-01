@@ -19,4 +19,6 @@ par(mfrow=c(1,4))
 for(i in 1:4){
   boxplot(trainingdata[,i],main=names(trainingdata)[i])
 }
-}
+classifier=glm(iris$Species~.,family=binomial,data = trainingdata)
+classifier
+summary(classifier)
