@@ -1,7 +1,5 @@
 data("iris")
 iris
-library(caret)
-library(tidyr)
 dataset=iris
 View(dataset)
 colnames(dataset)
@@ -22,3 +20,12 @@ for(i in 1:4){
 classifier=glm(iris$Species~.,family=binomial,data = trainingdata)
 classifier
 summary(classifier)
+attach(iris)
+classifier=glm(Species~Sepal.Length+Sepal.Width+Petal.Length,family=binomial,data=trainingdata)
+summary(classifier)
+classifier=glm(Species~Sepal.Length+Sepal.Width,family=binomial,data=trainingdata)
+summary(classifier)
+classifier=glm(Species~Sepal.Length,family=binomial,data=trainingdata)
+summary(classifier)
+plot(iris$Species,iris$Sepal.Length,data=iris)
+scatter.smooth(iris$Species,iris$Sepal.Length)
