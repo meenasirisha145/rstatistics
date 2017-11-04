@@ -29,3 +29,13 @@ classifier=glm(Species~Sepal.Length,family=binomial,data=trainingdata)
 summary(classifier)
 plot(iris$Species,iris$Sepal.Length,data=iris)
 scatter.smooth(iris$Species,iris$Sepal.Length)
+
+#library("rms")
+#attach(trainingdata)
+#final=fastbw(lrm(factor(Species)~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width),rule="p")
+#final
+
+y_pred=predict(classifier,type="response",newdata = testdata["Sepal.Length"])
+y_pred
+
+table(y_pred)
