@@ -25,7 +25,7 @@ table(dataset$Embarked)
 
 apply(dataset,2, function(x) length(unique(x)))
 
-##Will convert the below varibles into factors for ananlysis-----
+##Will convert the below varibles into factors for analysis-----
  
 cols=c("Survived","Pclass","Sex","Embarked")
 for (i in cols){
@@ -46,7 +46,7 @@ ggplot(dataset,aes(x=Pclass,fill=factor(Survived))) +
   xlab("Pclass") +
   ylab("Total Count") +
   labs(fill = "Survived")  
-No diffrence in the Titanic too, First class Survival rate is far better than the third class.
+#No diffrence in the Titanic too, First class Survival rate is far better than the third class.
 
 ## Exploratory Analysis on Gender: Are Female more likely to survive?----
 #Hypothesis, **gender** and survival rate are related----
