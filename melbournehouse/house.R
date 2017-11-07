@@ -13,13 +13,14 @@ str(dataset)
 colSums(is.na(dataset))
 #replacing NA values of bedroom2 column
 table(dataset$Bedroom2)
-dataset$Bedroom2[is.na(dataset$Bedroom2)]=3
+dataset$Bedroom2[is.na(dataset$Bedroom2)]=median(dataset$Bedroom2)
 table(dataset$Bedroom2)
-table(is.na(dataset$Bedroom2))
 
 #replacing NA values of Bathroom
 table(dataset$Bathroom)
-dataset$Bathroom[is.na(dataset$Bathroom)]=2
+dataset$Bathroom[is.na(dataset$Bathroom)]=median(dataset$Bathroom)
 table(dataset$Bathroom)
+
+pairs(dataset)
 
 #replacing NA values of Car
