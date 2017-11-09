@@ -51,10 +51,10 @@ test = subset(data,split == FALSE)
 
 # Structure of the data
 str(training)
-attach(training)
-#model1=fastbw(lrm(Loan_Status~Application_ID+ Gender+ Married +Dependents  + Education +Self_Employed +ApplicantIncome
- #                + CoapplicantIncome+LoanAmount  ),rule="p")
-#model1
+#attach(training)
+model1=fastbw(lrm(Loan_Status~Application_ID+ Gender+ Married +Dependents  + Education +Self_Employed +ApplicantIncome
+               + CoapplicantIncome+LoanAmount  ),data = training, rule="p")
+model1
 
 
 model=glm(Loan_Status~Application_ID+ Gender+ Married +Dependents  + Education +Self_Employed +ApplicantIncome
@@ -99,3 +99,58 @@ summary(model)
 model=glm(Loan_Status~Application_ID+  ApplicantIncome
           + CoapplicantIncome+LoanAmount ,data=training,family=binomial)
 summary(model)
+
+#removing application id
+model=glm(Loan_Status~  ApplicantIncome+ CoapplicantIncome+LoanAmount ,data=training,family=binomial)
+summary(model)
+
+#removing loan amount
+model=glm(Loan_Status~  ApplicantIncome+ LoanAmount ,data=training,family=binomial)
+summary(model)
+
+#MODEL1
+#removing loanamount
+model=glm(Loan_Status~  ApplicantIncome,data=training,family=binomial)
+summary(model)
+
+#testing the data
+prob_pred = predict(model, type = 'response', newdata = test[c("ApplicantIncome")])
+loan_pred = ifelse(prob_pred > 0.5, "Y", "N")
+test$pred=loan_pred
+test$pred
+test
+
+#confusion matrix
+cm=table(test$Loan_Status,loan_pred)
+cm
+
+Accuracy=(1+12)/length(test$Loan_Status)
+Accuracy
+
+#MODEL2
+#model including applicant income and loan amount
+model=glm(Loan_Status~  ApplicantIncome+ LoanAmount ,data=training,family=binomial)
+summary(model)
+#testing the data
+prob_pred = predict(model, type = 'response', newdata = test[c("ApplicantIncome","LoanAmount")])
+loan_pred = ifelse(prob_pred > 0.5, "Y", "N")
+test$pred=loan_pred
+#confusion matrix
+cm=table(test$Loan_Status,loan_pred)
+cm
+Accuracy=(1+12)/length(test$Loan_Status)
+Accuracy
+
+#MODEL3
+#model including applicant income and coapplicant income
+model=glm(Loan_Status~  ApplicantIncome+ CoapplicantIncome ,data=training,family=binomial)
+summary(model)
+#testing the data
+prob_pred = predict(model, type = 'response', newdata = test[c("ApplicantIncome","CoapplicantIncome")])
+loan_pred = ifelse(prob_pred > 0.5, "Y", "N")
+test$pred=loan_pred
+#confusion matrix
+cm=table(test$Loan_Status,loan_pred)
+cm
+Accuracy=(0+12)/length(test$Loan_Status)
+Accuracy

@@ -282,3 +282,8 @@ cm
 
 Accuracy = (96+45)/length(test_set$Survived)
 Accuracy
+
+#ROC curve
+library(ROCR)
+pr=prediction(prob_pred,test_set$Survived)
+pr
