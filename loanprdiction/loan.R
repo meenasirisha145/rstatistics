@@ -51,9 +51,11 @@ test = subset(data,split == FALSE)
 
 # Structure of the data
 str(training)
-#attach(training)
+attach(training)
+library(rms)
+
 model1=fastbw(lrm(Loan_Status~Application_ID+ Gender+ Married +Dependents  + Education +Self_Employed +ApplicantIncome
-               + CoapplicantIncome+LoanAmount  ),data = training, rule="p")
+               + CoapplicantIncome+LoanAmount  ), rule="p")
 model1
 
 
@@ -154,3 +156,6 @@ cm=table(test$Loan_Status,loan_pred)
 cm
 Accuracy=(0+12)/length(test$Loan_Status)
 Accuracy
+
+
+

@@ -1,0 +1,61 @@
+---
+title: "Exploring the Titanic Dataset"
+author: "Jayadeep"
+date: "6 Nov 2017"
+output:
+  html_document:
+    fig_height: 4.5
+    fig_width: 7
+    highlight: tango
+    number_sections: yes
+    theme: readable
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+
+```{r,warning=FALSE}
+library(ROCR)
+library(pROC)
+pmode1 <- c(0.75,0.85,0.40,0.25,0.45,0.35,0.65,0.15)
+pmode2 <- c(0.90,0.85,0.15,0.45,0.05,0.45,0.70,0.20)
+actual <- c(1,1,0,1,0,1,1,0)
+```
+
+Plotting ROC for Model 1.
+```{r}
+pr <- prediction(pmode1, actual)
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+```
+
+```{r}
+cutoffs <- data.frame(cut=prf@alpha.values[[1]], fpr=prf@x.values[[1]], 
+                      tpr=prf@y.values[[1]])
+cutoffs
+```
+
+```{r}
+my_roc <- roc(actual, pmode1)
+coords(my_roc, "best", ret = "threshold")
+```
+
+
+Plotting ROC for Model 2.
+```{r}
+pr <- prediction(pmode2, actual)
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+```
+
+```{r}
+cutoffs <- data.frame(cut=prf@alpha.values[[1]], fpr=prf@x.values[[1]], 
+                      tpr=prf@y.values[[1]])
+cutoffs
+```
+
+```{r}
+my_roc <- roc(actual, pmode1)
+coords(my_roc, "best", ret = "threshold")
+```
