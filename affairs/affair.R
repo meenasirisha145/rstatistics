@@ -50,16 +50,14 @@ accuracy
 
 
 #Model1 ---->including education to the model
-model1=glm(ynaffair~yearsmarried+religiousness+rating+education,family=binomial)
+model1=glm(ynaffair~yearsmarried+religiousness+rating+education+gender,family=binomial)
 summary(model1)
 #summary says that education is not significant
 
-#Model2----->including gender to model
-model2=glm(ynaffair~yearsmarried+religiousness+rating+gender,family=binomial)
+
+
+
+#Model2----> including occupation to model
+model2=glm(ynaffair~yearsmarried+religiousness+rating+gender+occupation,family=binomial)
 summary(model2)
-
-
-#Model3----> including occupation to model
-model3=glm(ynaffair~yearsmarried+religiousness+rating+occupation,family=binomial)
-summary(model3)
 
