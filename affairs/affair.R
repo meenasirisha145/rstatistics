@@ -25,19 +25,19 @@ length(data$children)
 split=sample.split(data$ynaffair,SplitRatio = 0.8)
 train=subset(data,split==TRUE)
 test=subset(data,split==FALSE)
-
+library(rms)
 attach(train)
 model=fastbw(lrm(ynaffair~gender+age+yearsmarried+children+religiousness+education+occupation+rating))
 model
 summary(model)
 
 #from the fast backward selection 3 variables are identified as significant
-model=glm(ynaffair~yearsmarried+religiousness+rating,family=binomial)
+model=glm(ynaffair~yearsmarried+religiousness+rating+gender,family=binomial)
+summary(model)
 
 
-library(rms)
 
-pred=predict(model,type="response",newdata=test[,c("yearsmarried","religiousness","rating")])
+pred=predict(model,type="response",newdata=test[,c("yearsmarried","religiousness","rating","gender")])
 pred
 test$probpred=ifelse(pred>0.5,"Yes","No")
 test$probpred
@@ -45,7 +45,7 @@ length(test$ynaffair)
 length(test$probpred)
 table(test$ynaffair,test$probpred)
 
-accuracy=(83+3)/length(test$affairs)
+accuracy=(89+4)/length(test$affairs)
 accuracy
 
 
