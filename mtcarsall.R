@@ -59,3 +59,61 @@ library(leaps)#gives the n best models
 leaps=regsubsets(mpg~wt+cyl+hp+am,data=data,nbest=10)
 summary(leaps)
 plot(leaps,scale="r2")
+
+
+library(car)
+subsets(leaps,statistic = "rsq")
+
+library(relaimpo)
+calc.relimp(fit,type = c("lmg","last","first","pratt"),rela=TRUE)
+boot=boot.relimp(fit,b=1000,type=c("lmg","last","first","pratt"),rank=TRUE,diff=TRUE,rela=TRUE)
+
+booteval.relimp(boot)
+plot(booteval.relimp(boot,sort=TRUE))#to check the relative importance of each variable in the model
+
+
+#LOGISTIC REGRESSION
+dataset=mtcars
+t=table(mtcars$am)
+amt=addmargins(t)
+amt
+ppt=prop.table(t)
+ppt
+#MODEL1
+base=glm(am~1,data=mtcars,family = binomial())
+summary(base)
+odds=exp(-0.3795)
+odds
+#MODEL2
+fit1=glm(am~mpg+disp+hp+wt,data=dataset,family = binomial())
+summary(fit1)
+plot(fit1)
+layout(matrix(c(1,2,3,4),2,2))
+
+#MODEL3
+fit2=glm(am~mpg+hp+wt,data=dataset,family = binomial())
+summary(fit2)
+
+#model4
+fit3=glm(am~hp+wt,data=dataset,family=binomial())
+summary(fit3)
+#model5
+fit4=glm(am~hp+wt+cyl,data=dataset,family=binomial())
+summary(fit4)
+
+probpred=predict(fit3,type="response",newdata = dataset[,c("hp","wt")])
+probpred
+probpred=ifelse(probpred>0.5,1,0)
+table(probpred)
+x=table(dataset$am,probpred)
+x
+accuracy=(18+12)/length(dataset$am)
+accuracy
+
+#checking for the sample
+probpred=predict(fit3,type="response",newdata = data.frame(wt=2,hp=150))
+probpred
+v=(18.86+(0.0362*150)-(8.083*2))
+(p=exp(v)/(1+exp(v)))
+
+caret::confusionMatrix(x)
