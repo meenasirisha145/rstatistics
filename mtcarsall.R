@@ -117,3 +117,7 @@ v=(18.86+(0.0362*150)-(8.083*2))
 (p=exp(v)/(1+exp(v)))
 
 caret::confusionMatrix(x)
+car::vif(fit3)
+sqrt(car::vif(fit3))>2
+car::vif(fit2)
+sqrt(car::vif(fit2))>2
